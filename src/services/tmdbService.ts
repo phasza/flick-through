@@ -1,4 +1,5 @@
-import {createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
 import type Movie from '../data/movie';
 
 const baseUrl = 'https://api.themoviedb.org/3';
@@ -9,16 +10,16 @@ export const tmdbApi = createApi({
   reducerPath: 'tmdbApi',
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (builder) => ({
-    searchMovies:
-      builder.query<Movie[], string>({
-        query: (query: string) => `search/movie?api_key=${apiKey}&language=en-US&page=1&include_adult=false&query=${query}`,
-        transformResponse: (rawResult: { results: Movie[] }) => {
-          return rawResult.results;
-        }
-      })
+    searchMovies: builder.query<Movie[], string>({
+      query: (query: string) =>
+        `search/movie?api_key=${apiKey}&language=en-US&page=1&include_adult=false&query=${query}`,
+      transformResponse: (rawResult: { results: Movie[] }) => {
+        return rawResult.results;
+      },
+    }),
   }),
-})
+});
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useSearchMoviesQuery } = tmdbApi
+export const { useSearchMoviesQuery } = tmdbApi;

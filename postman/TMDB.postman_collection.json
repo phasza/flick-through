@@ -1,196 +1,165 @@
 {
-	"info": {
-		"_postman_id": "8936645d-216b-4f61-92a5-4fa3f85a4594",
-		"name": "TMDB",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26322807"
-	},
-	"item": [
-		{
-			"name": "List genres",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/genre/movie/list?api_key={{apiKey}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"genre",
-						"movie",
-						"list"
-					],
-					"query": [
-						{
-							"key": "api_key",
-							"value": "{{apiKey}}"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Search movie",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/search/movie?api_key={{apiKey}}&language=en-US&page=1&include_adult=false&query=asd",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"search",
-						"movie"
-					],
-					"query": [
-						{
-							"key": "api_key",
-							"value": "{{apiKey}}"
-						},
-						{
-							"key": "language",
-							"value": "en-US"
-						},
-						{
-							"key": "page",
-							"value": "1"
-						},
-						{
-							"key": "include_adult",
-							"value": "false"
-						},
-						{
-							"key": "query",
-							"value": "asd"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get latest",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/movie/latest?api_key={{apiKey}}&language=en-US",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"movie",
-						"latest"
-					],
-					"query": [
-						{
-							"key": "api_key",
-							"value": "{{apiKey}}"
-						},
-						{
-							"key": "language",
-							"value": "en-US"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get image",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/movie/1099663/images?api_key={{apiKey}}&language=en-US",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"movie",
-						"1099663",
-						"images"
-					],
-					"query": [
-						{
-							"key": "api_key",
-							"value": "{{apiKey}}"
-						},
-						{
-							"key": "language",
-							"value": "en-US"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get popular",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/movie/popular?api_key={{apiKey}}&language=en-US&page=1",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"movie",
-						"popular"
-					],
-					"query": [
-						{
-							"key": "api_key",
-							"value": "{{apiKey}}"
-						},
-						{
-							"key": "language",
-							"value": "en-US"
-						},
-						{
-							"key": "page",
-							"value": "1"
-						}
-					]
-				}
-			},
-			"response": []
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
-		{
-			"key": "baseUrl",
-			"value": "https://api.themoviedb.org/3",
-			"type": "string"
-		},
-		{
-			"key": "apiKey",
-			"value": "21907d296a26ea0f8ea5ced654780804",
-			"type": "string"
-		}
-	]
+  "info": {
+    "_postman_id": "8936645d-216b-4f61-92a5-4fa3f85a4594",
+    "name": "TMDB",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "26322807"
+  },
+  "item": [
+    {
+      "name": "List genres",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/genre/movie/list?api_key={{apiKey}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["genre", "movie", "list"],
+          "query": [
+            {
+              "key": "api_key",
+              "value": "{{apiKey}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Search movie",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/search/movie?api_key={{apiKey}}&language=en-US&page=1&include_adult=false&query=asd",
+          "host": ["{{baseUrl}}"],
+          "path": ["search", "movie"],
+          "query": [
+            {
+              "key": "api_key",
+              "value": "{{apiKey}}"
+            },
+            {
+              "key": "language",
+              "value": "en-US"
+            },
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "include_adult",
+              "value": "false"
+            },
+            {
+              "key": "query",
+              "value": "asd"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get latest",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/movie/latest?api_key={{apiKey}}&language=en-US",
+          "host": ["{{baseUrl}}"],
+          "path": ["movie", "latest"],
+          "query": [
+            {
+              "key": "api_key",
+              "value": "{{apiKey}}"
+            },
+            {
+              "key": "language",
+              "value": "en-US"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get image",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/movie/1099663/images?api_key={{apiKey}}&language=en-US",
+          "host": ["{{baseUrl}}"],
+          "path": ["movie", "1099663", "images"],
+          "query": [
+            {
+              "key": "api_key",
+              "value": "{{apiKey}}"
+            },
+            {
+              "key": "language",
+              "value": "en-US"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get popular",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/movie/popular?api_key={{apiKey}}&language=en-US&page=1",
+          "host": ["{{baseUrl}}"],
+          "path": ["movie", "popular"],
+          "query": [
+            {
+              "key": "api_key",
+              "value": "{{apiKey}}"
+            },
+            {
+              "key": "language",
+              "value": "en-US"
+            },
+            {
+              "key": "page",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.themoviedb.org/3",
+      "type": "string"
+    },
+    {
+      "key": "apiKey",
+      "value": "21907d296a26ea0f8ea5ced654780804",
+      "type": "string"
+    }
+  ]
 }

@@ -1,8 +1,9 @@
-import {createSlice} from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
+
 import type Movie from './movie';
 
 interface MovieState {
-  moviesById: Record<number, Movie>
+  moviesById: Record<number, Movie>;
 }
 
 const initialState: MovieState = { moviesById: {} };
@@ -10,9 +11,7 @@ const initialState: MovieState = { moviesById: {} };
 const slice = createSlice({
   name: 'movie',
   initialState,
-  reducers: {
-    
-  }
+  reducers: {},
 });
 
 export default slice.reducer;

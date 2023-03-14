@@ -1,11 +1,16 @@
-import React, { type ChangeEvent, useState, type ReactElement, type FormEvent } from "react";
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
+import React, {
+  type ChangeEvent,
+  type FormEvent,
+  type ReactElement,
+  useState,
+} from 'react';
 
 interface SearchBarProps {
-  onChange: (newVal: string) => void
+  onChange: (newVal: string) => void;
 }
 
-const SearchBar = ({onChange}: SearchBarProps): ReactElement => {
+const SearchBar = ({ onChange }: SearchBarProps): ReactElement => {
   const [search, setSearch] = useState('');
 
   const handleOnSearchChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -16,7 +21,7 @@ const SearchBar = ({onChange}: SearchBarProps): ReactElement => {
 
   const handleOnSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-  }
+  };
 
   return (
     <form onSubmit={handleOnSubmit}>
@@ -26,7 +31,9 @@ const SearchBar = ({onChange}: SearchBarProps): ReactElement => {
         onChange={handleOnSearchChange}
         placeholder='Search movies...'
       />
-      <button type="submit"><MagnifyingGlassIcon className='h-6 w-6'/></button>
+      <button type='submit'>
+        <MagnifyingGlassIcon className='h-6 w-6' />
+      </button>
     </form>
   );
 };

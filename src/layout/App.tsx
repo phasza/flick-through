@@ -1,6 +1,6 @@
-import React, { useState, type ReactElement } from 'react';
-import MovieSearchResult from '../features/search/MovieSearchResult';
+import React, { type ReactElement, useState } from 'react';
 
+import MovieSearchResult from '../features/search/MovieSearchResult';
 import Header from './Header';
 
 const App = (): ReactElement => {
@@ -8,7 +8,11 @@ const App = (): ReactElement => {
 
   return (
     <div>
-      <Header onSearchChange={(val: string) => { setSearchTerm(val) }} />
+      <Header
+        onSearchChange={(val: string) => {
+          setSearchTerm(val);
+        }}
+      />
       {searchTerm !== '' && <MovieSearchResult searchTerm={searchTerm} />}
     </div>
   );

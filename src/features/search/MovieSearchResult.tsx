@@ -1,12 +1,15 @@
-import React, { type ReactElement } from "react";
-import MovieList from "./MovieList";
-import { useSearchMoviesQuery } from "../../services/tmdbService";
+import React, { type ReactElement } from 'react';
+
+import { useSearchMoviesQuery } from '../../services/tmdbService';
+import MovieList from './MovieList';
 
 interface MovieSearchResultProps {
-  searchTerm: string
+  searchTerm: string;
 }
 
-const MovieSearchResult = ({ searchTerm }: MovieSearchResultProps): ReactElement => {
+const MovieSearchResult = ({
+  searchTerm,
+}: MovieSearchResultProps): ReactElement => {
   const {
     data: movies,
     error,
@@ -15,24 +18,25 @@ const MovieSearchResult = ({ searchTerm }: MovieSearchResultProps): ReactElement
     pollingInterval: 3000,
     refetchOnMountOrArgChange: true,
     skip: false,
-  })
+  });
 
   if (isLoading) {
     return <p>Loading...</p>;
   }
 
   if (error !== undefined) {
-    return <p>{JSON.stringify(error)}</p>
+    return <p>{JSON.stringify(error)}</p>;
   }
 
   return (
     <section>
-      {
-        (movies !== undefined && movies.length > 0)
-          ? <MovieList movies={movies} />
-          : <p>No movies found for &apos;{searchTerm}&apos;</p>
-      }
-    </section>);
+      {movies !== undefined && movies.length > 0 ? (
+        <MovieList movies={movies} />
+      ) : (
+        <p>No movies found for &apos;{searchTerm}&apos;</p>
+      )}
+    </section>
+  );
 };
 
 export default MovieSearchResult;
