@@ -11,3 +11,7 @@ export default interface Movie {
   vote_average: number;
   vote_count: number;
 }
+
+export const instanceOfMovie = (object: any): object is Movie => {
+    return 'title' in object;
+}

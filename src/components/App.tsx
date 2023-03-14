@@ -1,6 +1,6 @@
 import React, { type ReactElement, useState } from 'react';
 
-import MovieSearchResult from '../features/search/MovieSearchResult';
+import MovieSearchResult from './MovieSearchResult';
 import Header from './Header';
 
 const App = (): ReactElement => {

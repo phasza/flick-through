@@ -5,9 +5,9 @@ const baseUrl = 'https://image.tmdb.org/t/p';
 export const enum BackdropSizes {
   w300 = 'w300',
   w780 = 'w780',
-  w1280 = 'w1280', 
-  original = 'original'
-};
+  w1280 = 'w1280',
+  original = 'original',
+}
 
 export const enum PosterSizes {
   w92 = 'w92',
@@ -16,9 +16,12 @@ export const enum PosterSizes {
   w342 = 'w342',
   w500 = 'w500',
   w780 = 'w780',
-  original = 'original'
+  original = 'original',
 }
 
-export const getImgSrcPath = (apiResponsePath: string, size: BackdropSizes | PosterSizes): string => {
+export const getImgSrcPath = (
+  apiResponsePath: string,
+  size: BackdropSizes | PosterSizes
+): string => {
   return `${baseUrl}/${size}/${apiResponsePath}`;
-}
+};

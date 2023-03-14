@@ -8,7 +8,7 @@ interface HeaderProps {
 
 const Header = ({ onSearchChange }: HeaderProps): ReactElement => {
   return (
-    <header>
+    <header className='flex justify-around items-center h-12 bg-green-300'>
       <SearchBar onChange={onSearchChange} />
     </header>
   );
