@@ -1,50 +1,45 @@
-import React, { useMemo, type ReactElement } from 'react';
-import type Movie from '../data/movie';
-import type TVSeries from '../data/tvSeries';
+import React, { type ReactElement, useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-import { useSearchMultiQuery } from '../services/tmdbService';
+import useMovieStore, { moviesListSelector } from '../data/movieStore';
 import MovieList from './MovieList';
 
-interface MovieSearchResultProps {
-  searchTerm: string;
-}
+const MovieSearchResult = (): ReactElement => {
+  const { query } = useParams();
 
-const MovieSearchResult = ({
-  searchTerm,
-}: MovieSearchResultProps): ReactElement => {
-  const currentPage = 2;
-  const lastResult = useSearchMultiQuery({ query: searchTerm, page: currentPage - 1 });
-  const currentResult = useSearchMultiQuery({ query: searchTerm, page: currentPage });
-  const nextResult = useSearchMultiQuery({ query: searchTerm, page: currentPage + 1 });
+  if (query === undefined) {
+    throw Error('Invalid route configuration, query param is undefined');
+  }
 
-  const movies = useMemo(() => {
-    const result = new Map<number, Movie | TVSeries>();
-    for (const data of [lastResult.data, currentResult.data, nextResult.data]) {
-      if (data !== undefined) {
-        data.forEach(i => result.set(i.id, i));
-      }
+  const movies = useMovieStore(moviesListSelector);
+  const isLoading = useMovieStore((state) => state.isLoading);
+  const error = useMovieStore((state) => state.error);
+  const totalPages = useMovieStore((state) => state.totalPages);
+  const fetchBySearch = useMovieStore((state) => state.fetchBySearch);
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const didMount = useRef(true);
+  useEffect(() => {
+    // Skip first render to avoid double fetch
+    if (didMount.current) {
+      didMount.current = false;
+    } else {
+      fetchBySearch(query, currentPage).catch(console.error);
     }
-    return Array.from(result.values());
-  }, [currentPage, lastResult.data, currentResult.data, nextResult.data]);
-
-  const isLoading = lastResult.isLoading;
-  const error = lastResult.error;
-
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error !== undefined) {
-    return <p>{JSON.stringify(error)}</p>;
-  }
+  }, [currentPage, query]);
 
   return (
     <section>
-      {movies !== undefined && movies.length > 0 ? (
-        <MovieList movies={movies} />
-      ) : (
-        <p>No movies found for &apos;{searchTerm}&apos;</p>
-      )}
+      <MovieList
+        movies={movies}
+        next={() => {
+          setCurrentPage((prev) => prev + 1);
+        }}
+        hasMore={currentPage < totalPages}
+        isLoading={isLoading}
+        error={error}
+      />
     </section>
   );
 };

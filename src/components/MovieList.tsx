@@ -1,24 +1,89 @@
-import React, { type ReactElement } from 'react';
+import React, { type ReactElement, useEffect, useState } from 'react';
 
-import type Movie from '../data/movie';
-import { instanceOfMovie } from '../data/movie';
-import type TVSeries from '../data/tvSeries';
+import {
+  type MultiResultType,
+  getUniqueId,
+  instanceOfMovie,
+} from '../api/tmdbResponse';
 import MovieCard from './MovieCard';
 
 interface MovieListProps {
-  movies: Array<Movie | TVSeries>;
+  movies: MultiResultType[];
+  next: () => void;
+  hasMore: boolean;
+  isLoading: boolean;
+  error: unknown | null;
 }
 
-const MovieList = ({ movies }: MovieListProps): ReactElement => {
-  const sortedMovies = [...movies].sort((a, b) => a.popularity - b.popularity).reverse();
+const scrollMaxValue = (): number => {
+  const body = document.body;
+  const html = document.documentElement;
+
+  const documentHeight = Math.max(
+    body.scrollHeight,
+    body.offsetHeight,
+    html.clientHeight,
+    html.scrollHeight,
+    html.offsetHeight
+  );
+
+  const windowHeight = window.innerHeight;
+
+  return documentHeight - windowHeight;
+};
+
+const MovieList = ({
+  movies,
+  next,
+  hasMore,
+  isLoading,
+  error,
+}: MovieListProps): ReactElement => {
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+  const handleScroll = (): void => {
+    const position = window.pageYOffset;
+    setScrollPosition(position);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isLoading || !hasMore) {
+      return;
+    }
+
+    if (scrollPosition >= scrollMaxValue() * 0.9) {
+      next();
+    }
+  }, [scrollPosition, isLoading, hasMore]);
+
+  // TODO do something with the error
   return (
-    <ul className='flex flex-wrap gap-1 mx-auto md:w-10/12 max-w-7xl'>
-      {sortedMovies.map((i) => (
-        <li key={i.id}>
-          <MovieCard title={instanceOfMovie(i) ? i.title : i.name} poster={i.poster_path} />
-        </li>
-      ))}
-    </ul>
+    <div>
+      <ul className='mx-auto flex max-w-7xl flex-wrap gap-1 sm:justify-center md:w-10/12'>
+        {movies.map((i) => (
+          <li key={getUniqueId(i)}>
+            {instanceOfMovie(i) ? (
+              <MovieCard title={i.title} poster={i.poster_path} />
+            ) : (
+              <MovieCard title={i.name} poster={i.poster_path} />
+            )}
+          </li>
+        ))}
+      </ul>
+      {isLoading && <p>Loading..</p>}
+      {error !== null && <p>{JSON.stringify(error)}</p>}
+      {!isLoading && movies.length === 0 && (
+        <p>No matching movies or series found!</p>
+      )}
+    </div>
   );
 };
 
