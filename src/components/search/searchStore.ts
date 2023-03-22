@@ -1,10 +1,12 @@
 import { create } from 'zustand';
 
-import { type MultiResultType } from '../api/tmdbResponse';
-import { fetchMultiSearch } from '../api/tmdbService';
+import {
+  type SearchMultiResult,
+  fetchMultiSearch,
+} from '../../api/tmdbSearchService';
 
-interface MovieStoreState {
-  moviesList: Map<string, MultiResultType>;
+interface SearchStoreState {
+  searchResult: Map<number, SearchMultiResult>;
   isLoading: boolean;
   error: unknown | null;
   totalPages: number;
@@ -12,8 +14,8 @@ interface MovieStoreState {
   fetchBySearch: (query: string, page: number) => Promise<void>;
 }
 
-const useMovieStore = create<MovieStoreState>()((set) => ({
-  moviesList: new Map(),
+const useSearchStore = create<SearchStoreState>()((set) => ({
+  searchResult: new Map(),
   isLoading: false,
   error: null,
   totalPages: 0,
@@ -21,7 +23,7 @@ const useMovieStore = create<MovieStoreState>()((set) => ({
     set(
       (state) => ({
         ...state,
-        moviesList: new Map(),
+        searchResult: new Map(),
         isLoading: false,
         error: null,
         totalPages: 0,
@@ -38,7 +40,7 @@ const useMovieStore = create<MovieStoreState>()((set) => ({
       set((state) => ({
         isLoading: false,
         error: null,
-        moviesList: new Map([...state.moviesList, ...response.results]),
+        searchResult: new Map([...state.searchResult, ...response.results]),
         totalPages: response.totalPages,
       }));
     } catch (error) {
@@ -47,10 +49,17 @@ const useMovieStore = create<MovieStoreState>()((set) => ({
   },
 }));
 
-export const moviesListSelector = (
-  state: MovieStoreState
-): MultiResultType[] => {
-  return Array.from(state.moviesList.values());
+export const searchResultSelector = (
+  state: SearchStoreState
+): SearchMultiResult[] => {
+  return Array.from(state.searchResult.values());
 };
 
-export default useMovieStore;
+export const searchResultByIdSelector = (
+  state: SearchStoreState,
+  id: number
+): SearchMultiResult | undefined => {
+  return state.searchResult.get(id);
+};
+
+export default useSearchStore;

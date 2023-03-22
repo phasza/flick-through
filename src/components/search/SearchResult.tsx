@@ -1,21 +1,21 @@
 import React, { type ReactElement, useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 
-import useMovieStore, { moviesListSelector } from '../data/movieStore';
-import MovieList from './MovieList';
+import SearchResultList from './SearchResultList';
+import useSearchStore, { searchResultSelector } from './searchStore';
 
-const MovieSearchResult = (): ReactElement => {
+const SearchResult = (): ReactElement => {
   const { query } = useParams();
 
   if (query === undefined) {
     throw Error('Invalid route configuration, query param is undefined');
   }
 
-  const movies = useMovieStore(moviesListSelector);
-  const isLoading = useMovieStore((state) => state.isLoading);
-  const error = useMovieStore((state) => state.error);
-  const totalPages = useMovieStore((state) => state.totalPages);
-  const fetchBySearch = useMovieStore((state) => state.fetchBySearch);
+  const movies = useSearchStore(searchResultSelector);
+  const isLoading = useSearchStore((state) => state.isLoading);
+  const error = useSearchStore((state) => state.error);
+  const totalPages = useSearchStore((state) => state.totalPages);
+  const fetchBySearch = useSearchStore((state) => state.fetchBySearch);
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -30,8 +30,9 @@ const MovieSearchResult = (): ReactElement => {
   }, [currentPage, query]);
 
   return (
-    <section>
-      <MovieList
+    <section className='mx-auto max-w-6xl'>
+      <Outlet />
+      <SearchResultList
         movies={movies}
         next={() => {
           setCurrentPage((prev) => prev + 1);
@@ -44,4 +45,4 @@ const MovieSearchResult = (): ReactElement => {
   );
 };
 
-export default MovieSearchResult;
+export default SearchResult;

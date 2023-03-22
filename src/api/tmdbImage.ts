@@ -23,5 +23,5 @@ export const getImgSrcPath = (
   apiResponsePath: string,
   size: BackdropSizes | PosterSizes
 ): string => {
-  return `${baseUrl}/${size}/${apiResponsePath}`;
+  return `${baseUrl}/${size}${apiResponsePath}`;
 };
